@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vcentral-ami</groupId>
+    <artifactId>com.minhhop.vcentral</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <description>The AGI Core library for VCentral integration.</description>
+    <organization>
+        <name>Minh Hop Technology</name>
+        <url>http://minhhop.net</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Giang Le</name>
+            <email>giangle@minhhop.net</email>
+            <organization>Minh Hop Technology</organization>
+            <organizationUrl>http://minhhop.net</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+7</timezone>
+        </developer>
+    </developers>
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+        <finalName>vcentral-ami</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <altDeploymentRepository>
+                        internal.repo::default::file://${project.build.directory}/mvn-repo
+                    </altDeploymentRepository>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <!-- git commit message -->
+                    <message>Maven artifacts for ${project.version}</message>
+                    <!-- disable webpage processing -->
+                    <noJekyll>true</noJekyll>
+                    <!-- matches distribution management repository url above -->
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <!-- remote branch name -->
+                    <branch>refs/heads/mvn-repo</branch>
+                    <!-- If you remove this then the old artifact will be removed and new
+                     one will replace. But with the merge tag you can just release by changing
+                                                      the version -->
+                    <merge>true</merge>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <!-- github repo name -->
+                    <repositoryName>voicecentral</repositoryName>
+                    <!-- github username -->
+                    <repositoryOwner>minhhoptech</repositoryOwner>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asteriskjava</groupId>
+            <artifactId>asterisk-java</artifactId>
+            <version>2.0.0.MINHHOP-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <groovy-version>2.0.4</groovy-version>
+        <jackson.version>2.1.1</jackson.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- github server corresponds to entry in ~/.m2/settings.xml -->
+        <github.global.server>github</github.global.server>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>asterisk-java-mvn-repo</id>
+            <url>https://raw.github.com/minhhoptech/asterisk-java/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
