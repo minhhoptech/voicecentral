@@ -12,7 +12,7 @@ import org.asteriskjava.manager.event.UserEvent
 @ToString(includeNames = true)
 class VCentralEvent extends UserEvent {
     enum Type {
-        AGENT_LOGIN, AGENT_LOGOUT, AGENT_CREATED, AGENT_DELETED, DIAL
+        AGENT_LOGIN, AGENT_LOGOUT, AGENT_CREATED, AGENT_DELETED, DIAL, SEGMENT_STARTED, SEGMENT_END
     }
     String details
     Long id
